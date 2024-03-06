@@ -36,3 +36,6 @@ npm i
 ```
 mysql -u root
 ```
+
+- 6 Copie o script de criação do banco de dados e cole no shell do MariaDB (./bd/script.sql), copie também os dados de teste que estão na pasta (./testes/populacaobd.sql)
+- 7 Abra o insomnia e importe o arquivo de teste (./teste/insomnia.json)
