@@ -1,5 +1,20 @@
 const con = require("../connection/mysql");
 
+// CRUD - CREATE
+
+const createCliente = (req, res) => {
+  con.query("INSERT INTO cliente SET?", req.body, (err, result) => {
+    if (err) {
+      res.status(500).send({
+        message: err.message || "Erro ao cadastrar cliente",
+      });
+      return;
+    }
+    res.json(result);
+  });
+};
+
+
 // CRUD - READ
 
 const getCliente = (req, res) => {

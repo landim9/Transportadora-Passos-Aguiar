@@ -24,4 +24,13 @@
 - 1 Faça Download deste repositório
 - 2 Abra com VSCode
 - 3 Abra um terminal **cmd** ou **bash**
-- 4 Navegue até a pasta **/api** e instale as dependências usando **npm** e execute com **nodemon** ou **node*
+- 4 Navegue até a pasta **/api** e instale as dependências usando **npm**
+
+```bahs
+cd api
+npm i
+```
+
+- 5 Abra o XAMPP e clique em **Start** nos serviços Apache e MySQL, Depois abra o **Shell** e acesse o MariaDB
+
+```
