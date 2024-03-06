@@ -1,35 +1,26 @@
-const con = require("../connection/mysql");
+const con = require('../connection/mysql');
 
-// CRUD - CREATE
+//CRUD - CREATE
+const addCliente = (req, res) => {
+    const { nome, endereco, telefone, email } = req.body;
+    con.query('INSERT INTO cliente (nome, endereco, telefone, email) VALUES (?, ?, ?, ?)', [nome, endereco, telefone, email], (err, result) => {
+        if (err) {
+            res.status(500).send('Erro ao adicionar cliente');
+        }
+        res.status(201).send('Cliente adicionado com sucesso');
+    });
+}
 
-const createCliente = (req, res) => {
-  con.query("INSERT INTO cliente SET?", req.body, (err, result) => {
-    if (err) {
-      res.status(500).send({
-        message: err.message || "Erro ao cadastrar cliente",
-      });
-      return;
-    }
-    res.json(result);
-  });
-};
+//CRUD - READ
+const getClientes = (req, res) => {
+    con.query('SELECT * FROM cliente', (err, result) => {
+        if (err) {
+            res.status(500).send('Erro ao listar clientes');
+        }
+        res.json(result);
+    });
+}
 
-
-// CRUD - READ
-
-const getCliente = (req, res) => {
-  con.query("SELECT * FROM cliente", (err, result) => {
-    if (err) {
-      res.status(500).send({
-        message: err.message || "Erro ao listar clientes",
-      });
-      return;
-    }
-    res.json(rows);
-  });
-};
-
-module.exports = { 
-    getCliente, 
-
-};
+module.exports = {
+    getClientes
+}
