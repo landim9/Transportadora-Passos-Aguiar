@@ -1,12 +1,12 @@
 const express = require('express');
-const routes = express.routes();
+const routes = express.Router();
 
+const Cliente = require('./controllers/cliente');
 
-const cliente = require('./controllers/cliente');
+routes.get('/', (req, res) => {
+    res.json("API Transportadora XPTO 1.0")
+});
 
-routes.get('/', (req, res) => {res.json("API Transportadora Passos Aguiar");});
-
-routes.post('/cliente', cliente.addCliente);
-routes.get('/cliente', cliente.getCliente);
+routes.get('/clientes', Cliente.getClientes);
 
 module.exports = routes;
