@@ -1,7 +1,5 @@
 # Transportadora
-
 ## MER - Dicionário de dados
-
 - Cliente(idCliente [chave primária], nome, endereco, telefone, email);
 - Funcionario(idFuncionário [chave primária], nome, cargo, salario);
 - Veiculo(idVeiculo [chave primária], placa, modelo, capacidade);
