@@ -47,9 +47,9 @@ routes.delete('/pedidos/:placa', Pedido.deletePedido);
 
 routes.post('/rotas', Rota.addRota);
 routes.get('/rotas', Rota.getRota);
-routes.get('/rotas/:placa', Rota.getRota);
+routes.get('/rotas/:idRota', Rota.getRota);
 routes.put('/rotas', Rota.updateRota);
-routes.delete('/rotas/:placa', Rota.deleteRota);
+routes.delete('/rotas/:idRota', Rota.deleteRota);
 
 
 module.exports = routes;
