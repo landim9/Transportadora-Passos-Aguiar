@@ -53,8 +53,8 @@ const updateFuncionario = (req, res) => {
 
 //CRUD - DELETE
 const deleteFuncionario = (req, res) => {
-    if (req.params.nome != null) {
-        con.query(`DELETE FROM Funcionario WHERE nome = '${req.params.nome}'`, (err, result) => {
+    if (req.params.idFuncionario != null) {
+        con.query(`DELETE FROM Funcionario WHERE idFuncionario = '${req.params.idFuncionario}'`, (err, result) => {
             if (err) {
                 res.status(500).json(err);
             } else {

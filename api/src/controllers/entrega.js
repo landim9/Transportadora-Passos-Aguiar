@@ -12,13 +12,20 @@ const addEntrega = (req, res) => {
   ) {
     const { placa, motorista, inicio, fim, status } = req.body;
     con.query(
-      "INSERT INTO entrega (placa, motorista, inicio, fim, status) VALUES (?, ?, ?)",
+      "INSERT INTO Entrega (placa, motorista, inicio, fim, status) VALUES (?, ?, ?, ?, ?)",
       [placa, motorista, inicio, fim, status],
       (err, result) => {
         if (err) {
           res.status(500).json(err);
         } else {
-          res.status(201).json(req.body);
+          // Se a inserção for bem-sucedida, retornar o objeto inserido
+          res.status(201).json({
+            placa: placa,
+            motorista: motorista,
+            inicio: inicio,
+            fim: fim,
+            status: status,
+          });
         }
       }
     );
@@ -26,6 +33,32 @@ const addEntrega = (req, res) => {
     res.status(400).json("Favor enviar todos os campos obrigatórios");
   }
 };
+
+// (req, res) => {
+//   if (
+//     req.body != null &&
+//     req.body.placa != null &&
+//     req.body.motorista != null &&
+//     req.body.inicio != null &&
+//     req.body.fim != null &&
+//     req.body.status != null
+//   ) {
+//     const { placa, motorista, inicio, fim, status } = req.body;
+//     con.query(
+//       "INSERT INTO Entrega (placa, motorista, inicio, fim, status) VALUES (?, ?, ?)",
+//       [placa, motorista, inicio, fim, status],
+//       (err, result) => {
+//         if (err) {
+//           res.status(500).json(err);
+//         } else {
+//           res.status(201).json(req.body);
+//         }
+//       }
+//     );
+//   } else {
+//     res.status(400).json("Favor enviar todos os campos obrigatórios");
+//   }
+// };
 
 //CRUD - READ
 const getEntrega = (req, res) => {
@@ -78,25 +111,37 @@ const updateEntrega = (req, res) => {
 
 // CRUD - DELETE
 const deleteEntrega = (req, res) => {
-  if (req.params.idEntrega != null) {
-    con.query(
-      `DELETE FROM entrega WHERE idEntrega = '${req.params.idEntrega}'`,
-      (err, result) => {
-        if (err) {
-          res.status(500).json(err);
+  if (req.params != null && req.params.id != null) {
+    const { id } = req.params;
+    con.query("DELETE FROM Pedido WHERE idEntrega = ?", id, (err, result) => {
+      if (err) {
+        res.status(500).json(err);
+      } else {
+        if (result.affectedRows == 0) {
+          res.status(404).json("Entrega não encontrada");
         } else {
-          if (result.affectedRows == 0) {
-            res.status(404).json("Entrega não encontrado");
-          } else {
-            res.status(200).json("Entrega deletado com sucesso");
-          }
+          // Se a exclusão da entrega for bem-sucedida, então deletar os pedidos associados
+          con.query(
+            "DELETE FROM Entrega WHERE idEntrega = ?",
+            id,
+            (err, result) => {
+              if (err) {
+                res.status(500).json(err);
+              } else {
+                res
+                  .status(200)
+                  .json("Entrega e pedidos associados removidos com sucesso");
+              }
+            }
+          );
         }
       }
-    );
+    });
   } else {
-    res.status(400).json("Favor enviar o id da entrega");
+    res.status(400).json("Favor enviar todos os campos obrigatórios");
   }
 };
+
 
 module.exports = {
   addEntrega,

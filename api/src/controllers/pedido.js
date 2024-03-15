@@ -53,20 +53,21 @@ const updatePedido = (req, res) => {
 
 //CRUD - DELETE
 const deletePedido = (req, res) => {
-    if (req.params.datapedido != null) {
-        con.query(`DELETE FROM pedido WHERE datapedido = '${req.params.datapedido}'`, (err, result) => {
+    if (req.params != null && req.params.id != null) {
+        const { id } = req.params;
+        con.query('DELETE FROM Funcionario WHERE idFuncionario = ?', [id], (err, result) => {
             if (err) {
                 res.status(500).json(err);
             } else {
                 if (result.affectedRows == 0) {
-                    res.status(404).json('Pedido não encontrado');
+                    res.status(404).json('Cliente não encontrado');
                 } else {
-                    res.status(200).json('Pedido deletado com sucesso');
+                    res.status(200).json('Cliente removido com sucesso');
                 }
             }
         });
     } else {
-        res.status(400).json('Favor enviar o data do Pedido');
+        res.status(400).json('Favor enviar todos os campos obrigatórios');
     }
 }
 

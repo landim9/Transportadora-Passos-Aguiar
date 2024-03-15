@@ -1,4 +1,3 @@
-const e = require('express');
 const con = require('../connection/mysql');
 
 //CRUD - CREATE
@@ -57,7 +56,7 @@ const updateCliente = (req, res) => {
 const deleteCliente = (req, res) => {
     if (req.params != null && req.params.id != null) {
         const { id } = req.params;
-        con.query('DELETE FROM cliente WHERE idCliente = ?', [id], (err, result) => {
+        con.query('DELETE FROM Cliente WHERE idCliente = ?', [id], (err, result) => {
             if (err) {
                 res.status(500).json(err);
             } else {
