@@ -4,7 +4,7 @@ const con = require('../connection/mysql');
 const addFuncionario = (req, res) => {
     if (req.body != null && req.nome != null && req.body.cargo != null && req.body.salario != null) {
         const { nome, cargo, salario } = req.body;
-        con.query('INSERT INTO veiculo (nome, cargo, salario) VALUES (?, ?, ?)', [nome, cargo, salario], (err, result) => {
+        con.query('INSERT INTO Funcionario(nome, cargo, salario) VALUES (?, ?, ?)', [nome, cargo, salario], (err, _result) => {
             if (err) {
                 res.status(500).json(err);
             } else {
@@ -19,14 +19,14 @@ const addFuncionario = (req, res) => {
 //CRUD - READ
 const getFuncionario = (req, res) => {
     if (req.params.nome != null) {
-        con.query(`SELECT * FROM funcionario WHERE nome = '${req.params.nome}'`, (err, result) => {
+        con.query(`SELECT * FROM Funcionario WHERE nome = '${req.params.nome}'`, (err, result) => {
             if (err) {
                 res.status(500).send('Erro ao listar Funcionario');
             }
             res.json(result);
         });
     } else {
-        con.query('SELECT * FROM funcionario', (err, result) => {
+        con.query('SELECT * FROM Funcionario', (err, result) => {
             if (err) {
                 res.status(500).send('Erro ao listar Funcionario');
             }
@@ -53,22 +53,36 @@ const updateFuncionario = (req, res) => {
 
 //CRUD - DELETE
 const deleteFuncionario = (req, res) => {
-    if (req.params.idFuncionario != null) {
-        con.query(`DELETE FROM Funcionario WHERE idFuncionario = '${req.params.idFuncionario}'`, (err, result) => {
-            if (err) {
-                res.status(500).json(err);
-            } else {
-                if (result.affectedRows == 0) {
-                    res.status(404).json('Funcionário não encontrado');
+    if (req.params != null && req.params.id != null) {
+      const { id } = req.params;
+      con.query("DELETE FROM Funcionario WHERE idFuncionario = ?", id, (err, result) => {
+        if (err) {
+          res.status(500).json(err);
+        } else {
+          if (result.affectedRows == 0) {
+            res.status(404).json("Entrega não encontrada");
+          } else {
+            // Se a exclusão da entrega for bem-sucedida, então deletar os pedidos associados
+            con.query(
+              "DELETE FROM Entrega WHERE idEntrega = ?",
+              id,
+              (err, result) => {
+                if (err) {
+                  res.status(500).json(err);
                 } else {
-                    res.status(200).json('Funcionário deletado com sucesso');
+                  res
+                    .status(200)
+                    .json("Entrega e pedidos associados removidos com sucesso");
                 }
-            }
-        });
+              }
+            );
+          }
+        }
+      });
     } else {
-        res.status(400).json('Favor enviar o nome do Funcionário');
+      res.status(400).json("Favor enviar todos os campos obrigatórios");
     }
-}
+  };
 
 module.exports = {
     addFuncionario,

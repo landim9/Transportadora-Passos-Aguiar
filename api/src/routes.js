@@ -33,9 +33,9 @@ routes.delete('/entregas/:id', Entrega.deleteEntrega);
 
 routes.post('/funcionarios', Funcionario.addFuncionario);
 routes.get('/funcionarios', Funcionario.getFuncionario);
-routes.get('/funcionarios/:id', Funcionario.getFuncionario);
+routes.get('/funcionarios/:idFuncionario', Funcionario.getFuncionario);
 routes.put('/funcionarios', Funcionario.updateFuncionario);
-routes.delete('/funcionarios/:id', Funcionario.deleteFuncionario);
+routes.delete('/funcionarios/:idFuncionario', Funcionario.deleteFuncionario);
 
 
 routes.post('/pedidos', Pedido.addPedido);

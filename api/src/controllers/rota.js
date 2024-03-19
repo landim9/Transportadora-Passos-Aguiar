@@ -3,7 +3,7 @@ const con = require('../connection/mysql');
 //CRUD - CREATE
 const addRota = (req, res) => {
     if (req.body != null && req.body.origem != null && req.body.destino != null && req.body.distancia != null) {
-        const { placa, modelo, capacidade } = req.body;
+        const { origem, destino, distancia } = req.body;
         con.query('INSERT INTO Rota (origem, destino, distancia) VALUES (?, ?, ?)', [origem, destino, distancia], (err, result) => {
             if (err) {
                 res.status(500).json(err);
@@ -39,7 +39,7 @@ const getRota = (req, res) => {
 const updateRota = (req, res) => {
     if (req.body != null && req.body.origem != null && req.body.destino != null && req.body.distancia != null) {
         const { origem, destino, distancia } = req.body;
-        con.query('UPDATE veiculo SET destino = ?, distancia = ? WHERE origem = ?', [destino, distancia, origem], (err, result) => {
+        con.query('UPDATE Rota SET destino = ?, distancia = ? WHERE origem = ?', [destino, distancia, origem], (err, result) => {
             if (err) {
                 res.status(500).json(err);
             } else {
@@ -53,8 +53,8 @@ const updateRota = (req, res) => {
 
 //CRUD - DELETE
 const deleteRota = (req, res) => {
-    if (req.params.origem != null) {
-        con.query(`DELETE FROM rota WHERE origem = '${req.params.origem}'`, (err, result) => {
+    if (req.params.idRota != null) {
+        con.query(`DELETE FROM rota WHERE idRota = '${req.params.idRota}'`, (err, result) => {
             if (err) {
                 res.status(500).json(err);
             } else {
@@ -66,7 +66,7 @@ const deleteRota = (req, res) => {
             }
         });
     } else {
-        res.status(400).json('Favor enviar a origem da rota');
+        res.status(400).json('Favor enviar o ID da rota');
     }
 }
 
