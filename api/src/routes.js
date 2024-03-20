@@ -33,16 +33,16 @@ routes.delete('/entregas/:id', Entrega.deleteEntrega);
 
 routes.post('/funcionarios', Funcionario.addFuncionario);
 routes.get('/funcionarios', Funcionario.getFuncionario);
-routes.get('/funcionarios/:idFuncionario', Funcionario.getFuncionario);
+routes.get('/funcionarios/:id', Funcionario.getFuncionario);
 routes.put('/funcionarios', Funcionario.updateFuncionario);
-routes.delete('/funcionarios/:idFuncionario', Funcionario.deleteFuncionario);
+routes.delete('/funcionarios/:id', Funcionario.deleteFuncionario);
 
 
 routes.post('/pedidos', Pedido.addPedido);
 routes.get('/pedidos', Pedido.getPedido);
-routes.get('/pedidos/:placa', Pedido.getPedido);
+routes.get('/pedidos/:id', Pedido.getPedido);
 routes.put('/pedidos', Pedido.updatePedido);
-routes.delete('/pedidos/:placa', Pedido.deletePedido);
+routes.delete('/pedidos/:id', Pedido.deletePedido);
 
 
 routes.post('/rotas', Rota.addRota);

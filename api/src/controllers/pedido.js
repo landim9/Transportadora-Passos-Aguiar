@@ -2,9 +2,9 @@ const con = require('../connection/mysql');
 
 //CRUD - CREATE
 const addPedido = (req, res) => {
-    if (req.body != null && req.datapedido != null && req.body.valor != null) {
+    if (req.body != null && req.body.datapedido != null && req.body.valor != null) {
         const { datapedido, valor } = req.body;
-        con.query('INSERT INTO Pedido (datapedido, valor) VALUES (?, ?, ?)', [datapedido, valor], (err, result) => {
+        con.query('INSERT INTO Pedido (datapedido, valor) VALUES (?, ?)', [datapedido, valor], (err, result) => {
             if (err) {
                 res.status(500).json(err);
             } else {
@@ -15,6 +15,7 @@ const addPedido = (req, res) => {
         res.status(400).json('Favor enviar todos os campos obrigatórios');
     }
 }
+
 
 //CRUD - READ
 const getPedido = (req, res) => {
@@ -39,7 +40,7 @@ const getPedido = (req, res) => {
 const updatePedido = (req, res) => {
     if (req.body != null && req.body.datapedido != null && req.body.valor != null) {
         const { datapedido, valor } = req.body;
-        con.query('UPDATE Pedido SET valor = ?,  WHERE datapedido = ?', [datapedido, valor], (err, result) => {
+        con.query('UPDATE Pedido SET valor = ? WHERE datapedido = ?', [valor, datapedido], (err, result) => {
             if (err) {
                 res.status(500).json(err);
             } else {
@@ -51,11 +52,12 @@ const updatePedido = (req, res) => {
     }
 }
 
+
 //CRUD - DELETE
 const deletePedido = (req, res) => {
     if (req.params != null && req.params.id != null) {
         const { id } = req.params;
-        con.query('DELETE FROM Funcionario WHERE idFuncionario = ?', [id], (err, result) => {
+        con.query('DELETE FROM pedido WHERE idPedido = ?', [id], (err, result) => {
             if (err) {
                 res.status(500).json(err);
             } else {
